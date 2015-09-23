@@ -1,0 +1,9 @@
+need to identify helper verbs like 하다, 되다, then look back for additional possible parts of the verb
+
+look for the last "를" particle. 
+look for adjectives ending in "는"
+
+within the verb translater part we need to look for verb modifiers and verb parts
+
+
+

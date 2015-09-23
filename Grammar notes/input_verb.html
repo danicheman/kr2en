@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<title>Verb Entry Form</title>
+<style type="text/css">
+<!--
+.special {
+	background-color: #996666;
+}
+.meaning {
+	background-color: #99FFFF;
+}
+.korean {
+	background-color: #66FF66;
+}
+-->
+</style>
+</head>
+
+<body>
+<?php
+//if we have the values, input them into the database.
+
+
+
+?>
+
+
+<h1>Verb Entry Form</h1>
+<form method="post" target="input_verb.php">
+<table width="713" border="1" cellspacing="3" cellpadding="3">
+  <tr>
+    <th nowrap="nowrap">Variable</th>
+    <td>NULL</td>
+    <td>Value</td>
+    <td>Comments</td>
+    </tr>
+  <tr>
+    <th width="197" nowrap="nowrap" class="korean">knocon</th>
+    <td width="30">&nbsp;</td>
+    <td width="144"><input type="text" name="knocon" /></td>
+    <td width="293">Unconjugated, not null (줍) </td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="korean">knocon_conj</th>
+    <td><input type="checkbox" checked name="knocon_conj_c" value="checkbox" /></td>
+    <td><input type="text" name="knocon_conj" /></td>
+    <td>주우</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="korean">kcon</th>
+    <td>&nbsp;</td>
+    <td><input type="text" name="kcon" /></td>
+    <td>Conjugated 주워 </td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="korean">other</th>
+    <td><input type="checkbox" checked name="other_c" value="checkbox" /></td>
+    <td><input type="text" name="other" /></td>
+    <td>돼 -&gt; 되어 </td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">context</th>
+    <td>&nbsp;</td>
+    <td><input name="context" type="text" value="1" /></td>
+    <td>default 1 </td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">type</th>
+    <td>&nbsp;</td>
+    <td><input type="text" name="type" /></td>
+    <td>0 is intrinsitive 1 is seperable 2 is inseperable</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">ktype</th>
+    <td>&nbsp;</td>
+    <td><input type="text" name="ktype" /></td>
+    <td>0 is action verb  1 is descriptive verb</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">verb_word</th>
+    <td><input type="checkbox" checked name="verb_word_c" value="checkbox" /></td>
+    <td><input type="text" name="verb_word" /></td>
+    <td>which word in the multi-word verb is conjugated?</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">auxillary_verb</th>
+    <td><input type="checkbox" checked name="auxillary_verb_c" value="checkbox" /></td>
+    <td><input type="text" name="auxillary_verb" /></td>
+    <td>0 be 1 have 2 do 3 go</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">withhuman</th>
+    <td>&nbsp;</td>
+    <td><input name="withhuman" type="text" value="0" /></td>
+    <td>boolean, 0 is false </td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">withthing</th>
+    <td>&nbsp;</td>
+    <td><input name="withthing" type="text" value="0" /></td>
+    <td>boolean, 0 is false </td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">withplace</th>
+    <td>&nbsp;</td>
+    <td><input name="withplace" type="text" value="0" /></td>
+    <td>boolean, 0 is false </td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">withabstract</th>
+    <td>&nbsp;</td>
+    <td><input name="withabstract" type="text" value="0" /></td>
+    <td>boolean, 0 is false </td>
+    </tr>
+  <tr>
+    <th height="28" nowrap="nowrap" class="meaning">english</th>
+    <td>&nbsp;</td>
+    <td><input type="text" name="english" /></td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">adjective</th>
+    <td>&nbsp;</td>
+    <td><input type="text" name="adjective" /></td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">noun</th>
+    <td>&nbsp;</td>
+    <td><input type="text" name="noun" /></td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">order_action</th>
+    <td>&nbsp;</td>
+    <td><input name="order_action" type="text" value="0" /></td>
+    <td>0 = swap with object, 1 swap with oe, 2 swap with oe or object</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">special</th>
+    <td>&nbsp;</td>
+    <td><input name="special" type="text" value="0" /></td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="meaning">entry_id</th>
+    <td>&nbsp;</td>
+    <td><input name="entry_id" type="text" value="daniche" /></td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="special">translation_meaning</th>
+    <td>&nbsp;</td>
+    <td><input type="text" name="translation_meaning" /></td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="special">translation_movement</th>
+    <td>&nbsp;</td>
+    <td><input type="text" name="translation_movement" /></td>
+    <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <th nowrap="nowrap" class="special">translation_preposition_modify</th>
+    <td>&nbsp;</td>
+    <td><input type="text" name="translation_preposition_modify" /></td>
+    <td>&nbsp;</td>
+    </tr>
+</table>
+<p>Submit
+  <input type="submit" name="Submit" value="Submit" />
+</p>
+</form>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,68 @@
+tenses_jonesVerb 'Tenses' In English
+
+
+
+
+ 
+      ACTIVE 
+      VERB TENSEEXAMPLE HOW TO FORM
+      Present I eat.Base form (add -s for 3PS) 
+      PastI ate.Simple past 
+      Present ProgressiveI am eating. Present form of 'be' + [base form + -ing]
+      Past ProgressiveI was eating. Past form of 'be' + [base form + -ing]
+      Present PerfectI have eaten. Present form of 'have' + past participle
+      Past PerfectI had eaten. Past form of 'have' + past participle
+      Present Perfect ProgressiveI have been eating. Present form of 'have' + 
+      been + [base form + -ing] 
+      Past Perfect ProgressiveI had been eating. Past form of 'have' + been + 
+      [base form + -ing] 
+      Modal + Base FormI will eat. Modal + base form
+      Modal ProgressiveI will be eating. Modal + be + [base form + -ing]
+      Modal PerfectI will have eaten. Modal + have + past participle
+      Modal Perfect ProgressiveI will have been eating. Modal + have + been + 
+      past participle
+
+
+
+      PASSIVE 
+      (the verb 'to be' in its active form + the past participle of the verb) 
+      VERB TENSEEXAMPLE HOW TO FORM
+      Present The food is eaten. Present form of 'be' + past participle
+      PastThe food was eaten.Past form of 'be' + past participle
+      Present Progressive The food is being eaten. Present form of 'be' + being 
+      + past participle 
+      Past ProgressiveThe food was being eaten. Past form of 'be' + being + past 
+      participle 
+      Present PerfectThe food has been eaten. Present form of 'have' + been + 
+      past participle 
+      Past PerfectThe food had been eaten Past form of 'have' + been + past 
+      participle 
+      Present Perfect ProgressiveThe food has been being eaten. Present form of 
+      'have' + been + being + past participle 
+      Past Perfect ProgressiveThe food had been being eaten. Past form of 'have' 
+      + been + being + past participle 
+      Modal + Base FormThe food will be eaten. Modal + be + past participle
+      Modal ProgressiveThe food will be being eaten. Modal + be + being + past 
+      participle
+      Modal PerfectThe food will have been eaten. Modal + have + been + past 
+      participle
+      Modal Perfect ProgressiveThe food will have been being eaten. Modal + have 
+      + been + being + past participle 
+
+
+
+
+
+
+ Return to List of Grammar Lists Main Menu.
+ Return to English Grammar on the Web Home Page.
+
+
+
+Pat Byrd and Tom McKlin
+Department of Applied Linguistics & ESL
+Georgia State University
+Atlanta, GA 30302
+patbyrd@gsu.edu & tmcklin@gsu.edu
+Telephone: 404-651-2934 
+

@@ -1,0 +1,11 @@
+È¸Àå(´Ô)?						president
+»çÀå(´Ô)?						boss
+(»ïÃÌ|¹éºÎ|¼÷ºÎ|°í¸ğºÎ|ÀÌ¸ğºÎ)	uncle
+ÀÌ¸ğ,°í¸ğ,¼÷¸ğ,¹é¸ğ 			aunt 
+¼±»ı(´Ô)?						teacher
+Çü(´Ô)?							brother
+´©(³ª|´Ô)						sister
+
+Subjects are being found properly as subjects, but other types are incorrectly identifying types as subjects.
+
+Sentances starting with the conjunction "ha ji man" have an error..

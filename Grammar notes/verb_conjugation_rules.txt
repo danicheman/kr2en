@@ -1,0 +1,73 @@
+Verb Conjugation Rules
+
+Verbs are inflected (verbs are said to be conjugated while nouns and pronouns are declined.) to reflect how they are used.  Apart from the irregular ones whose unpredictable principal parts, P1, P4, and P5 must be memorized and are listed below, conjugation follows this simple set of rules.   New irregular verbs are no longer being created in English so the list of irregular verbs to be learnt is not getting any larger. 
+
+ 
+
+Definitions:
+
+vowels : ['a','e','i','o','u','y'].  A vowel will be indicated in context with a capital V.
+
+consonants : all others.  Consonants will be indicated in context with a capital C.
+
+doubling characters : ['b','d','f','g','l','m','n','p','r','s','t','z'].
+
+The verb "be" is a special case and is ignored in these rules in simple present and past.
+
+All one-syllable verbs have a stressed last syllable.
+
+ 
+
+P1:  The verb stem.
+
+ 
+
+P2: Third person singular present indicative.
+
+1.        Special case: "have" becomes "has"
+
+2.        Modal verb (can, could, will, would, may, might, shall, should, must): remains the same as verb stem
+
+3.        Verb ends with Cs or Cz, add "es"
+
+4.        Verb ends with Vs or Vz, double the last character and add "es"
+
+5.        Verb ends with Cy, drop "y" and add "ies"  try ? tries,  fly ? flies
+
+6.        Verb ends with "ch", "sh", "x", or "o", add "es" box ? boxes,  search ? searches,  wish ? wishes go ? goes
+
+7.        If none of the above, add "s"
+
+ 
+
+P3: present participle.
+
+1.        Verb ends with Ce or "ue" (and is not the verb "be"), drop the "e" and add "ing" race ? racing,  make ? making
+
+2.        Verb ends with stressed syllable, ending with a single vowel or quV followed by a doubling character: double the last character, and add "ing" rub ? rubbing, infer ? inferring, quit ? quitting
+
+3.        Verb ends with "ie", drop the "ie" and add "ying" lie ? lying, vie ? vying
+
+4.        If none of the above, just add "ing"
+
+ 
+
+P4: simple past.
+
+1.        If verb is irregular, use past tense make ? made,  run ? ran
+
+2.        If verb ends with "e" then drop the "e" and add "ed" grate ? grated, date ? dated
+
+3.        If verb ends with Cy, drop the "y" and add "ied" deny ? denied
+
+4.        If last syllable is stressed, and ends with a single vowel or quV followed by a doubling character, double the last character and add "ed" rub ? rubbed, quip ? quipped
+
+5.        If none of the above, just add "ed"
+
+ 
+
+P5: past participle.
+
+1.        If verb is irregular, use past participle.
+
+2.        Otherwise use the same rules as are required for P4.

@@ -1,0 +1,113 @@
+﻿/*
+include("utf/utf_normalizer.php");
+include("jamo_con.php");
+
+$test_string = "일본은 기술에서 더 멀리 앞서가고, 중국은 무섭게 쫓아오는데 걱정스럽기 짝이 없다는 말이지요.";
+$decomposed_test_string = $test_string;
+utf_normalizer::nfd($decomposed_test_string);
+$shifted_test_string = jamo_to_co_jamo($decomposed_test_string);
+
+
+
+?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<meta http-equiv="content-language" content="ko"> 
+<meta http-equiv="content-type" content="text/html; charset=utf8"> 
+<html> 
+<head><title>T3</title>
+<style type="text/css">
+<!--
+#subject {color:white;background:#14223D}
+#topic {color:white;background:#543C1C}
+#object {background:#8B9BBA}
+#verbMod {background:#DDC5A6}
+#yellow {background: yellow}
+#blue {color:white; background: blue}
+#green {color:white; background: green}
+#red {color:white; background: red}
+#gray {color:white; background: gray}
+blockquote { display: inline; border-bottom: thin solid gray; }
+
+	body {
+		margin:20px 20px 20px 20px;
+		
+		}
+	
+	#main {
+		border:1px solid #000; 
+		background:#C9AEFF;
+		}
+
+
+	#main #menu {
+		border-left:1px solid #000; 
+		border-bottom:1px solid #000;
+		float:right;
+		width:230px;
+		background:#C9AEFF;
+		margin:0px 0px 10px 10px;
+		}
+	#main #wordmenu {
+		float:left;
+		width:300px;
+		border: 1px solid green;
+		margin: 1px 1px 1px 1px;
+		
+	}	
+	div.spacer {
+		clear: both;
+	}
+	p,h1,pre {
+		margin:0px 10px 10px 10px;
+		}
+		
+	h1 {
+		font-size:14px;
+		padding-top:10px;
+		}
+	
+	#menu p { font-size:10px}
+	#menu li { font-size:10px}
+
+-->
+</style>
+</head>
+<body>
+<?php
+echo "<br>test string:<br> $test_string <br><br>";
+
+$clause_array = split_sentance_conjunctions($shifted_test_string, $decomposed_test_string );
+echo "<pre>";
+print_r($clause_array);
+echo "</pre>";
+print_sentance_conjunctions($decomposed_test_string, $clause_array);
+
+//sentance clause object - it's meant to be used as an array so there's no next link
+class s_clause {
+	function is_clause($ic) {
+		$this->isclause = $ic;
+	}
+	function __construct($cll, $col, $o) {
+		$this->clause_length = $cll;
+		$this->conj_length = $col;
+		$this->offset = $o;
+		
+	}
+}
+//m_verb class.  Contains modified Korean verb and later can hold english translation.
+class m_verb {
+	function english($e, $w) {
+		$this->english = $e;
+		$this->isdouble = $w; // was the verb located by searching for two words?
+	}
+	function double_trans($dt) {
+		$this->double_trans = $dt;
+	}
+	function __construct($t, $mv, $l) {
+			$this->tense = $t;
+			$this->mverb = $mv;
+			$this->length = $l;
+	}
+}
+//end of test
+*/

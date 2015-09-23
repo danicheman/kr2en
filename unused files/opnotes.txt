@@ -1,0 +1,11 @@
+Opperating notes:
+
+Searching for words:
+
+1. Search for an exact match with context.
+2. Exact match found with same context = done.
+3. Exact match without context = split word (particles off, unconjugate)
+4. Search again
+5. Exact word match with same context = done.
+6. Exact word match with different context = take first original match.
+7. Translate directly.

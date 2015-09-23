@@ -1,0 +1,12 @@
+
+What TY did:
+
+Romanizing function
+Ho-ching function (including family names)
+
+What you will do:
+
+need to have an idea whether to search before or after hoching for related information
+  -modify the hoching function to do this (and research the usage and grammar of ho-chings in the news)
+need to have an idea whether to translate something as a name or as a noun.
+  -add a boolean value to the database

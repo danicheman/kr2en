@@ -1,0 +1,662 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html><head><title>glish.com : CSS layout techniques : nested float</title><script type="text/javascript">
+<!--
+
+//to do:  When user clicks back, then clicks done, form info is cleared?
+// form clear button?
+// check boxes are removed if user selected them on the previous form.
+
+/* how to: function call in "next" button leads to function which 
+ 		recieves type of form and number.  Then, on the current 
+ 		form it collects the names of all the checkbox type elements 
+ 		for which checked=true and changes the remaining forms of that 
+ 		type to false.
+ 		
+ 		- needs to clear if user redefines word or goes back to orginal 
+ 		element.
+ 		
+ 		*/
+
+dataString = new Object();
+function switchIfDone(formSelector, this_div, next_div)
+{
+
+  var complete = true;
+  for (var loop=0; loop < formSelector.elements.length; loop++)
+  {
+    if (formSelector.elements[loop].value == "")
+    {
+      complete = false;
+    }
+  }
+  if ((complete == true) && (next_div == "finished")) 
+  {
+    submitTheInfo();
+  } 
+  else if (complete == true) 
+  {
+    switchDiv(this_div, next_div);
+  } else {
+    alert('please complete the form before moving on');
+  }
+}
+
+function switchDiv(this_div, next_div)
+{
+  if (getStyleObject(this_div) && getStyleObject(next_div)) {
+    changeObjectVisibility(this_div, "hidden");
+    changeObjectVisibility(next_div, "visible");
+  }
+}
+function getStyleObject(objectId) {
+  // checkW3C DOM, then MSIE 4, then NN 4.
+  //
+  if(document.getElementById && document.getElementById(objectId)) {
+	return document.getElementById(objectId).style;
+   }
+   else if (document.all && document.all(objectId)) {  
+	return document.all(objectId).style;
+   } 
+   else if (document.layers && document.layers[objectId]) { 
+	return document.layers[objectId];
+   } else {
+	return false;
+   }
+}
+
+function changeObjectVisibility(objectId, newVisibility) {
+    // first get a reference to the cross-browser style object 
+    // and make sure the object exists
+    var styleObject = getStyleObject(objectId);
+    if(styleObject) {
+	styleObject.visibility = newVisibility;
+	return true;
+    } else {
+	// we couldn't find the object, so we can't change its visibility
+	return false;
+    }
+}
+
+//Collect Form Info collectes the data into an HTML submittable format
+// as inputs we have the type of word it was
+// as id we have the unique identifier of the word which we are specifying.
+// if english = "" then it's not defined there.
+function collectFormInfo(type, id) {
+	//dataString[id] = new Object();
+	switch (type) {
+		case "clause":
+		case "proper":
+		theObj = eval( "document." + type + "_" + id );
+			for (var elems=0; elems<theObj.length;elems++) {
+				if(theObj.elements[elems].name !="") {
+					if(theObj.elements[elems].type != "checkbox") {
+						dataString[theObj.name + "_" + theObj.elements[elems].name]
+						= theObj.elements[elems].value;
+					} else if(theObj.elements[elems].checked) {
+						dataString[theObj.name + "_" + theObj.elements[elems].name]
+						= "checked";
+					}
+				}
+			}
+		break;
+		case "verb":		
+		case "common":
+			var i = 1;
+			do {
+				//i is to go from 1 to 3 - for each common noun def
+				
+				theObj = eval( "document." + type + i + "_" + id );
+				if( theObj.english.value == "" ) {
+					break;
+				}
+				for ( var elems=0; elems < theObj.length; elems++ ) {		
+					if(theObj.elements[elems].name !="") {
+						if(theObj.elements[elems].type != "checkbox") {
+							dataString[theObj.name + "_" + theObj.elements[elems].name]
+							= theObj.elements[elems].value;
+						} else if(theObj.elements[elems].checked) {
+							dataString[theObj.name + "_" + theObj.elements[elems].name]
+							= "checked";
+						}
+					}
+				}
+				i++;
+			} while (i < 4)
+			
+		break;
+		default: 
+		alert("unregognized switch: " + type);
+		break;
+	}
+}
+function resetWordData(id) {
+	dataString.splice(id,1);
+}
+function showDataString() {
+	var j;
+	var dataStringOutput = "";
+		for (j in dataString) {
+			dataStringOutput += "dataString[" + j + "] = " + dataString[j] + "\n";
+		}
+	alert(dataStringOutput);
+}
+function submitTheInfo()
+{
+	document.hiddenform.mytext.value = serialize(dataString);
+	document.hiddenform.submit(); 
+}
+
+function serialize(strIn)
+    {
+        intLen = 0;
+        for(n = 0; n < strIn.length; n++)
+        {
+            c = strIn.charCodeAt(n);
+            if (c < 256)
+            {
+            // symbolcodes 0-255 => 1 byte
+                intLen++;
+            }        
+            else
+            { 
+                if( (c > 255) && (c < 65535) ) 
+                {
+                // symbolcodes 255-65535 => 2 bytes
+                 intLen += 2;
+                }            
+                else 
+                {
+                    if( (c > 65535) && (c < 16777215) )
+                    {
+                    // symbolcodes 65535-16777216 => 3 bytes
+                    intLen += 3;
+                    }
+                    else
+                    {
+                        intLen += 4;
+                    }
+                }
+            }
+        }
+        return 's:' + intLen + ':' + '"' + strIn + '";';
+    }
+    
+    function fillForm(objField)
+    {
+        document.forms[0].serial.value = serialize(document.forms[0].a.value);
+        document.forms[0].serial2.value = serialize2(document.forms[0].a.value);
+    }
+    
+    function serialize2(strIn)
+    {
+        var php = new PHP_Serializer(true);
+        return php.serialize(strIn);
+    }
+//-->
+</script>
+<style type="text/css">
+	
+	body {
+		margin:10px 10px 10px 10px;
+		background: #eee;
+	}
+	
+	#main {
+		border:1px solid #000; 
+		width: 400px;
+		margin:10px 10px 10px 10px;
+		float: left;
+		background: #fff;
+		position: relative;
+		height:500px;
+		overflow: auto;
+	}
+
+/* Looks like you have to specify the width of #menu
+or IE5 Mac stretches it all the way across the div, and 
+Opera streches it half way. */
+
+	p,h1,pre {
+		margin:0px 10px 10px 10px;
+		font-size:12px;
+	}
+	
+	h1 {
+		font-size:12pt;
+		padding-top:10px;
+	}
+	A { 
+		font-size:10px;
+	}
+	A:link {
+		color: #00B256;
+		text-decoration: none;
+	}
+	
+	A:visited {text-decoration: none}
+	A:active {text-decoration: none}
+	A:hover {text-decoration: underline; color: #006DAD;}
+	
+	
+	
+	#el08 {background-color: #ddd;} 
+	div.spacer {
+		clear: both;
+	}
+
+	form {position:relative}
+
+	#checkbox {position:absolute;left:10em}
+	#mybutton {
+		padding: 1px;
+	}
+	.mybox {
+		//height: 12px;
+		//border: 1px solid;
+		position:absolute;
+		left:10em;
+		//font-size:10px;
+	}
+</style>
+</head><body>
+<div id="main">
+<div id="defineTheWord_1" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<a href="#" onClick="switchDiv('defineTheWord_1','formSelector_1');">Define this word.</a>
+</div>	
+<div id="completed_1" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<p>Definition complete. Waiting to upload.</p>
+	<a href="#" onClick="resetWordData(1);switchDiv('completed_1','formSelector_1');">Redefine this word.</a>
+</div>	
+
+<!--after user selects input type, types are unselectable unless unlocked.  Because they are hidden.-->
+<div id="formSelector_1" style="position:absolute;top:5px;left:5px;visibility:visible;">
+	<h1>What kind of word is this?</H1><a href="#" onClick="switchDiv('formSelector_1','defineTheWord_1');"> Do not define this word.</a>
+	<form name="formSelector_1">
+		
+		<input type="radio" id="e108" name="form_type" value="clause"
+		  onClick="switchDiv('formSelector_1','clause_1');">Clause (Noun clause)<br>
+		
+		<input type="radio" name="form_type" value="proper"
+		  onClick="switchDiv('formSelector_1','proper_1');">Name (Proper Noun)<br>
+	
+		<input type="radio" name="form_type" value="common"
+		  onClick="switchDiv('formSelector_1','common1_1');">Noun (Common Noun)<br>
+		  
+		<input type="radio" name="form_type" value="verb"
+		  onClick="switchDiv('formSelector_1','verb1_1');">Verbs (all forms)
+		</form>
+	</div>
+<!--Need to have a global finish form, and a done button for the form -->
+<div id="clause_1" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	
+	<form name="clause_1">
+	<H1>Clause</H1><a href="#" onClick="switchDiv('clause', 'formSelector_1');">reselect form type</a>
+		<p>This is used to input a short phrase. ie:<br>
+		ex. 눈이 높은 사람 <br>
+		a person with unreasonable expectations</p>
+		<p><input id="checkbox" type="checkbox" name="person">Is Person</p>
+		<p><input id="checkbox" type="checkbox" name="thing">Is Thing</p>
+		<p><input id="checkbox" type="checkbox" name="plural">Is Plural</p>
+		<p><input id="checkbox" type="checkbox" name="place">Is Place</p>
+		<p><input id="checkbox" type="checkbox" name="group">Is Group</p>
+		<p><input id="checkbox" type="checkbox" name="abstract">Is abstract</p>
+		<p>English<input class="mybox" name="english" type="text"></p>
+		<input type="button" value="< back" id="mybutton"
+			onClick="switchDiv('clause_1', 'formSelector_1');">
+		<input type="button" value="done" id="mybutton"
+			onClick="switchIfDone(this.form, 'clause_1', 'completed_1');collectFormInfo('clause', 1);">
+	</form>
+</div>
+<div id="proper_1" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="proper_1">
+		<H1>Proper Noun</H1><a href="#" onClick="switchDiv('proper_1', 'formSelector_1');">reselect form type</a><br>
+		<p>ex. 강성호 Songho Kang, 현대 Hyundai</p>
+		<p>Is Masculin<input id="checkbox" type="checkbox" name="masculin"></P>
+		<p>Is Feminine<input id="checkbox" type="checkbox" name="feminine"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Group<input id="checkbox" type="checkbox" name="group"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>English: <input name="english"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('proper_1', 'formSelector_1');">		
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'proper_1', 'completed_1');collectFormInfo('proper', 1);">
+	</form>
+</div>
+
+<div id="common1_1" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="common1_1">
+		<H1>Common Noun</H1><a href="#" onClick="switchDiv('common1_1', 'formSelector_1');">reselect form type</a><br>
+		ex. 사과 apple, 책 book, 문 door/gate
+		<p>Context<input id="checkbox" name="context"  type="text" value="1" size="2">
+		<p>Is Person<input id="checkbox" type="checkbox" name="person"></p>
+		<p>Is Group<input id="checkbox" type="checkbox" name="group"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>Is abstract<input id="checkbox" type="checkbox" name="abstract"></p>
+		<p>English<input name="english"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('common1_1', 'formSelector_1');">
+		<input type="button" value="next >" 
+			onClick="switchIfDone(this.form, 'common1_1', 'common2_1');">
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'common1_1', 'completed_1');collectFormInfo('common', 1);">
+	</form>
+</div>
+<div id="common2_1" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="common2_1">
+		<H1>Common Noun Second Definition</H1><a href="#" onClick="switchDiv('common1_1', 'formSelector_1');">reselect form type</a><br>
+		ex. 사과 apple, 책 book, 문, door/gate
+		<p>Context<input id="checkbox" name="context"  type="text" value="1" size="2">
+		<p>Is Person<input id="checkbox" type="checkbox" name="person"></p>
+		<p>Is Group<input id="checkbox" type="checkbox" name="group"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>Is abstract<input id="checkbox" type="checkbox" name="abstract"></p>
+		<p>English<input name="english"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('common2_1', 'common1_1');">		
+		<input type="button" value="next >" 
+			onClick="switchIfDone(this.form, 'common2_1', 'common3_1');">
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'common2_1', 'completed_1');collectFormInfo('common', 1);">
+	</form>
+</div>
+<div id="common3_1" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="common3_1">
+		<H1>Common Noun Third Definition</H1><a href="#" onClick="switchDiv('common1_1', 'formSelector_1');">reselect form type</a><br>
+		ex. 사과 apple, 책 book, 문, door/gate
+		<p>Context<input id="checkbox" name="context"  type="text" value="1" size="2">
+		<p>Is Person<input id="checkbox" type="checkbox" name="person"></p>
+		<p>Is Group<input id="checkbox" type="checkbox" name="group"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>Is abstract<input id="checkbox" type="checkbox" name="abstract"></p>
+		<p>English<input name="english"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('common3_1', 'common2_1');">
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'common3_1', 'completed_1');collectFormInfo('common', 1);">
+	</form>
+</div>
+<div id="verb1_1" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="verb1_1">
+		<H1>Verb (all types)</H1><a href="#" onClick="switchDiv('verb1_1', 'formSelector_1');">reselect form type</a><br>
+		ex. 수영 하다  to swim, 맥주를 마시다 to drink beer
+		<p>Context<input id="checkbox" name="no_con"  type="text" value="1" size="2"></p>
+		<p>Not Conjugated<input id="checkbox" name="context"  type="text"></p>
+		<p>Conjugated<input id="checkbox" name="con"  type="text"></p>
+		<p>Conjugated special<input id="checkbox" name="con_sp"  type="text"></p>
+		<p>With Person<input id="checkbox" type="checkbox" name="person"></p>
+		<p>With Group<input id="checkbox" type="checkbox" name="group"></p>
+		<p>With Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>With Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>Is helper<input id="checkbox" type="checkbox" name="helper"></p>
+		<p>Is irregular<input id="checkbox" type="checkbox" name="irregular"></p>
+		<p>With Abstract<input id="checkbox" type="checkbox" name="abstract"></p>
+		<p>English<input id="checkbox" name="english"  type="text"></p>
+		<p>Adj. Form<input id="checkbox" name="adj_form"  type="text"></p>
+		<p>Noun Form<input id="checkbox" name="noun_form"  type="text"></p>
+		<p>Passive Form<input id="checkbox" name="noun_form"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('verb1_1', 'formSelector_1');">
+		<input type="button" value="next >" 
+			onClick="switchIfDone(this.form, 'verb1_1', 'verb2_1');">
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'verb1_1', 'completed_1');collectFormInfo('verb', 1);">
+	</form>
+</div>
+<div id="verb2_1" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="verb2_1">
+		<H1>Verb - Second Definition</H1><a href="#" onClick="switchDiv('verb1_1', 'formSelector_1');">reselect form type</a><br>
+		ex. 수영 하다  to swim, 맥주를 마시다 to drink beer
+		<p>Context<input id="checkbox" name="no_con"  type="text" value="1" size="2"></p>
+		<p>Not Conjugated<input id="checkbox" name="context"  type="text"></p>
+		<p>Conjugated<input id="checkbox" name="con"  type="text"></p>
+		<p>Conjugated special<input id="checkbox" name="con_sp"  type="text"></p>
+		<p>Is Masculin<input id="checkbox" type="checkbox" name="masculin"></p>
+		<p>Is Feminine<input id="checkbox" type="checkbox" name="feminine"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>English<input id="checkbox" name="english"  type="text"></p>
+		<p>Adj. Form<input id="checkbox" name="adj_form"  type="text"></p>
+		<p>Noun Form<input id="checkbox" name="noun_form"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('verb2_1', 'verb1_1');">		
+		<input type="button" value="next >" 
+			onClick="switchIfDone(this.form, 'verb2_1', 'verb3_1');">			
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'verb2_1', 'completed_1');collectFormInfo('verb', 1);">
+	</form>
+</div>
+<div id="verb3_1" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="verb3_1">
+		<H1>Verb - Third Definition</H1><a href="#" onClick="switchDiv('verb1_1', 'formSelector_1');">reselect form type</a><br>
+		ex. 수영 하다  to swim, 맥주를 마시다 to drink beer
+		<p>Context<input id="checkbox" name="no_con"  type="text" value="1" size="2"></p>
+		<p>Not Conjugated<input id="checkbox" name="context"  type="text"></p>
+		<p>Conjugated<input id="checkbox" name="con"  type="text"></p>
+		<p>Conjugated special<input id="checkbox" name="con_sp"  type="text"></p>
+		<p>Is Masculin<input id="checkbox" type="checkbox" name="masculin"></p>
+		<p>Is Feminine<input id="checkbox" type="checkbox" name="feminine"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>English<input id="checkbox" name="english"  type="text"></p>
+		<p>Adj. Form<input id="checkbox" name="adj_form"  type="text"></p>
+		<p>Noun Form<input id="checkbox" name="noun_form"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('verb3_1', 'verb2_1');">	
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'verb3_1', 'completed_1');collectFormInfo('verb', 1);">
+	</form>
+</div>
+</div>
+<div id="main">
+<div id="defineTheWord_2" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<a href="#" onClick="switchDiv('defineTheWord_2','formSelector_2');">Define this word.</a>
+</div>	
+<div id="completed_2" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<p>Definition complete. Waiting to upload.</p>
+	<a href="#" onClick="switchDiv('completed_2','formSelector_2');">Redefine this word.</a>
+</div>	
+<!--after user selects input type, types are unselectable unless unlocked.  Because they are hidden.-->
+<div id="formSelector_2" style="position:absolute;top:5px;left:5px;visibility:visible;">
+	<h1>What kind of word is this?</H1><a href="#" onClick="switchDiv('formSelector_2','defineTheWord_2');"> Do not define this word.</a>
+	<form name="formSelector_2">
+		
+		<input type="radio" name="form_type" value="clause"
+		  onClick="switchDiv('formSelector_2','clause_2');">Clause (Noun clause)<br>
+		
+		<input type="radio" name="form_type" value="proper"
+		  onClick="switchDiv('formSelector_2','proper_2');">Name (Proper Noun)<br>
+	
+		<input type="radio" name="form_type" value="common"
+		  onClick="switchDiv('formSelector_2','common1_2');">Noun (Common Noun)<br>
+		  
+		<input type="radio" name="form_type" value="verb"
+		  onClick="switchDiv('formSelector_2','verb1_2');">Verbs (all forms)
+		</form>
+	</div>
+<!--Need to have a global finish form, and a done button for the form -->
+<div id="clause_2" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	
+	<form name="clause_2">
+	<H1>Clause</H1><a href="#" onClick="switchDiv('clause', 'formSelector_2');">reselect form type</a>
+		<p>This is used to input a short phrase. ie:<br>
+		ex. 눈이 높은 사람 <br>
+		a person with unreasonable expectations</p>
+		<p><input id="checkbox" type="checkbox" name="person">Is Person</p>
+		<p><input id="checkbox" type="checkbox" name="thing">Is Thing</p>
+		<p><input id="checkbox" type="checkbox" name="plural">Is Plural</p>
+		<p><input id="checkbox" type="checkbox" name="place">Is Place</p>
+		<p><input id="checkbox" type="checkbox" name="group">Is Group</p>
+		<p><input id="checkbox" type="checkbox" name="abstract">Is abstract</p>
+		<p>English<input name="english"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('clause_2', 'formSelector_2');">
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'clause_2', 'completed_2');collectFormInfo('clause', 2);">
+	</form>
+</div>
+<div id="proper_2" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="proper_2">
+		<H1>Proper Noun</H1><a href="#" onClick="switchDiv('proper_2', 'formSelector_2');">reselect form type</a><br>
+		<p>ex. 강성호 Songho Kang, 현대 Hyundai</p>
+		<p>Is Masculin<input id="checkbox" type="checkbox" name="masculin"></P>
+		<p>Is Feminine<input id="checkbox" type="checkbox" name="feminine"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Group<input id="checkbox" type="checkbox" name="group"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>English: <input name="english"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('proper_2', 'formSelector_2');">		
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'proper_2', 'completed_2');collectFormInfo('proper', 2);">
+	</form>
+</div>
+
+<div id="common1_2" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="common1_2">
+		<H1>Common Noun</H1><a href="#" onClick="switchDiv('common1_2', 'formSelector_2');">reselect form type</a><br>
+		ex. 사과 apple, 책 book, 문 door/gate
+		<p>Context<input id="checkbox" name="context"  type="text" value="1" size="2">
+		<p>Is Person<input id="checkbox" type="checkbox" name="person"></p>
+		<p>Is Group<input id="checkbox" type="checkbox" name="group"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>Is abstract<input id="checkbox" type="checkbox" name="abstract"></p>
+		<p>English<input name="english"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('common1_2', 'formSelector_2');">
+		<input type="button" value="next >" 
+			onClick="switchIfDone(this.form, 'common1_2', 'common2_2');">
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'common1_2', 'completed_2');collectFormInfo('common', 2);">
+	</form>
+</div>
+<div id="common2_2" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="common2_2">
+		<H1>Common Noun Second Definition</H1><a href="#" onClick="switchDiv('common1_2', 'formSelector_2');">reselect form type</a><br>
+		ex. 사과 apple, 책 book, 문, door/gate
+		<p>Context<input id="checkbox" name="context"  type="text" value="1" size="2">
+		<p>Is Person<input id="checkbox" type="checkbox" name="person"></p>
+		<p>Is Group<input id="checkbox" type="checkbox" name="group"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>Is abstract<input id="checkbox" type="checkbox" name="abstract"></p>
+		<p>English<input name="english"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('common2_2', 'common1_2');">		
+		<input type="button" value="next >" 
+			onClick="switchIfDone(this.form, 'common2_2', 'common3_2');">
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'common2_2', 'completed_2');collectFormInfo('common', 2);">
+	</form>
+</div>
+<div id="common3_2" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="common3_2">
+		<H1>Common Noun Third Definition</H1><a href="#" onClick="switchDiv('common1_2', 'formSelector_2');">reselect form type</a><br>
+		ex. 사과 apple, 책 book, 문, door/gate
+		<p>Context<input id="checkbox" name="context"  type="text" value="1" size="2">
+		<p>Is Person<input id="checkbox" type="checkbox" name="person"></p>
+		<p>Is Group<input id="checkbox" type="checkbox" name="group"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>Is abstract<input id="checkbox" type="checkbox" name="abstract"></p>
+		<p>English<input name="english"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('common3_2', 'common2_2');">
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'common3_2', 'completed_2');collectFormInfo('common', 2);">
+	</form>
+</div>
+<div id="verb1_2" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="verb1_2">
+		<H1>Verb (all types)</H1><a href="#" onClick="switchDiv('verb1_2', 'formSelector_2');">reselect form type</a><br>
+		ex. 수영 하다  to swim, 맥주를 마시다 to drink beer
+		<p>Context<input id="checkbox" name="no_con"  type="text" value="1" size="2"></p>
+		<p>Not Conjugated<input id="checkbox" name="context"  type="text"></p>
+		<p>Conjugated<input id="checkbox" name="con"  type="text"></p>
+		<p>Conjugated special<input id="checkbox" name="con_sp"  type="text"></p>
+		<p>Is Masculin<input id="checkbox" type="checkbox" name="masculin"></p>
+		<p>Is Feminine<input id="checkbox" type="checkbox" name="feminine"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>English<input id="checkbox" name="english"  type="text"></p>
+		<p>Adj. Form<input id="checkbox" name="adj_form"  type="text"></p>
+		<p>Noun Form<input id="checkbox" name="noun_form"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('verb1_2', 'formSelector_2');">
+		<input type="button" value="next >" 
+			onClick="switchIfDone(this.form, 'verb1_2', 'verb2_2');">
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'verb1_2', 'completed_2');collectFormInfo('verb', 2);">
+	</form>
+</div>
+<div id="verb2_2" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="verb2_2">
+		<H1>Verb - Second Definition</H1><a href="#" onClick="switchDiv('verb1_2', 'formSelector_2');">reselect form type</a><br>
+		ex. 수영 하다  to swim, 맥주를 마시다 to drink beer
+		<p>Context<input id="checkbox" name="no_con"  type="text" value="1" size="2"></p>
+		<p>Not Conjugated<input id="checkbox" name="context"  type="text"></p>
+		<p>Conjugated<input id="checkbox" name="con"  type="text"></p>
+		<p>Conjugated special<input id="checkbox" name="con_sp"  type="text"></p>
+		<p>Is Masculin<input id="checkbox" type="checkbox" name="masculin"></p>
+		<p>Is Feminine<input id="checkbox" type="checkbox" name="feminine"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>English<input id="checkbox" name="english"  type="text"></p>
+		<p>Adj. Form<input id="checkbox" name="adj_form"  type="text"></p>
+		<p>Noun Form<input id="checkbox" name="noun_form"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('verb2_2', 'verb1_2');">		
+		<input type="button" value="next >" 
+			onClick="switchIfDone(this.form, 'verb2_2', 'verb3_2');">			
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'verb2_2', 'completed_2');collectFormInfo('verb', 2);">
+	</form>
+</div>
+<div id="verb3_2" style="position:absolute;top:5px;left:5px;visibility:hidden;">
+	<form name="verb3_2">
+		<H1>Verb - Third Definition</H1><a href="#" onClick="switchDiv('verb1_2', 'formSelector_2');">reselect form type</a><br>
+		ex. 수영 하다  to swim, 맥주를 마시다 to drink beer
+		<p>Context<input id="checkbox" name="no_con"  type="text" value="1" size="2"></p>
+		<p>Not Conjugated<input id="checkbox" name="context"  type="text"></p>
+		<p>Conjugated<input id="checkbox" name="con"  type="text"></p>
+		<p>Conjugated special<input id="checkbox" name="con_sp"  type="text"></p>
+		<p>Is Masculin<input id="checkbox" type="checkbox" name="masculin"></p>
+		<p>Is Feminine<input id="checkbox" type="checkbox" name="feminine"></p>
+		<p>Is Thing<input id="checkbox" type="checkbox" name="thing"></p>
+		<p>Is Plural<input id="checkbox" type="checkbox" name="plural"></p>
+		<p>Is Place<input id="checkbox" type="checkbox" name="place"></p>
+		<p>English<input id="checkbox" name="english"  type="text"></p>
+		<p>Adj. Form<input id="checkbox" name="adj_form"  type="text"></p>
+		<p>Noun Form<input id="checkbox" name="noun_form"  type="text"></p>
+		<input type="button" value="< back" 
+			onClick="switchDiv('verb3_2', 'verb2_2');">	
+		<input type="button" value="done" 
+			onClick="switchIfDone(this.form, 'verb3_2', 'completed_2');collectFormInfo('verb', 2);">
+	</form>
+</div>
+
+
+<div id="hiddenstuff" style="position:absolute;top:300;left:5;visibility:hidden;">
+	<form name="hiddenform" method="POST" action="http://localhost/dictionary/word_data.php">
+		<input  type="text" name="mytext" value="default">
+	</form>
+</div>
+</div>
+<a href="#" onClick="showDataString();">show dataString</a>
+<a href="#" onClick="submitTheInfo();">submit values to PHP</a>
+</body>
+</html>

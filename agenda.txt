@@ -1,0 +1,233 @@
+﻿Agenda:
+Optional:
+	  
+	- FIFO stack for keywords/categories of nouns (GLOBAL SCOPE)
+	- FIFO stack for subject (GLOBAL SCOPE)
+	- option to replace word if it has a certain particle
+	
+Testing:
+
+	- Working on testing the conjunction method, 
+	- debug 나는 사과하고 귤을 좋아한다 
+	- proper translation for 중국과 일본 틈바구니에서
+	- debug sentences without verbs (article titles?)
+	- debug sentences with numbers	
+	- debug sentences ending in punctuation, (quotation or comma)
+		
+Next for Eric:
+
+	- special case particle eliminator function
+	- handle non-conjunction non-final verbs in a sentence
+	- handle ~이다
+	- handle quoted speech
+	- ~지 않았다/~지 않아요
+	
+	- comparatives and superlatives into grammar patterns
+	
+	Questions for Eric:
+	- Eric, which conjunctions show the true tense of their preceeding verbs? Which don't?
+
+	- 별곡초 - This means Byul-gok Elementary School.  If we find the long form of this school's name
+	  earlier on in an article, we need to have a pre-processor to go through the section and replace
+	  the short form with the long form.	 
+	
+For November:
+
+	
+	
+	- ~하고 is used only with nouns together or verbs together.  It is not mixed. Use this to translate.
+	- if there is an object particle in the following clause...
+	
+
+Now:
+
+	was working on line 92 of english_functions.php
+	
+	- special rules with 아무도 (nobody) ..need to ignore the negative sentence
+
+	
+	- use active tense with adjectives (when to use passive tense? adjective after the verb?) 
+	
+
+	
+	- EXCEPTION!!
+			
+			IF there is just a subject/topic in the previous clause, ie, "Nick", we
+			don't need a pronoun following the conjunction.
+	
+	
+	- pre and post positions added with appropriate spaces
+
+	- ~고 없어요 has no translation but forces past tense on the preceeding clause. (add to conjunction)
+	
+	- in word order functions, move_verbs_and_conjunctions() need to check for conjunctions behind the verb.
+	
+	가고 있어: now it says "are going", should say "I am going".
+	가고 와요: error searching for the verb.
+	
+	- back_of_sentence_or_conj for moving adverbs going back.
+	
+
+
+	
+	Which parts of the code are messy or need improvement?
+
+	- end of new divide clauses
+
+Testing:
+		
+
+		
+		NEW:
+		서울의 모습은 실제로 많이 달라졌다.
+		오늘은 때때로 소나기가 온다고 했습니다.
+		우리 회사는  날로 발전하고 있습니다.
+		
+		
+		일본 사람들은 돈을 많이 벌었다 (working)
+		10년 후에는 우리나라 휘트니스계를 이끄는 선두주자가 되고 싶은 그녀가 가장 자신감을 갖고 있는 신체 부위는 히프다. (not working)
+		이번에는 훈련도 열심히 했으니까 꼭 달라진 모습 보여주겠다"고 큰소리쳤다. (not working)
+		한국 정부는 중국에서 돈을 많이 빌려 주었기 때문에 우리나라가 부도를 당했다  (working)
+		대통령 취임식에서 박민근 의사가 대통령을 저격 해서 취임식이 엉망이 되어 버렸다 (mostly working)
+		호주 정부는 캥거루가 너무 많아지기 전에 다 죽여 버렸다 
+		캐나다 사람이 빵을 사러 호주 식품점에 갔다 (working)
+			 (working)
+		닉은 화장실에서 용변을 보다가 화장지가 없는 것을 발견하고 주위에 요청을 했지만 아무도 그를 도와주지 않았다 why is "go" conj moving?
+		그래서 닉은 양말을 벗고 양말로 용변을 처리하려고 했는데 여자친구가 전화가 와서 그만 양말을 떨어 트리고 말았다
+		그와 닉은 생각에 잠겼는데 아무도 그가 무슨 생각을 하는지 짐작하지 못했지만 그의 어머니는 알고 있을 것이다 
+		그러나 닉은 아무것도 할수 없었을 때 갑자기 옆 화장실에서 떨어지는 화장지를 보고 주우려 했으나 손이 닫지 않아 실망 하고 있는 중에 갑자기 여자친구가 화장지를 가지고 왔다
+		닉이 땅에 떨어진 돈을 주우려고 했더니 주위에 사람들이 닉을 도둑놈이라고 몰아 붙였다 
+		닉은 중국에서 산 자동차를 한국에 가지고 와서 운전을 하는 법을 배웠다
+Done: 
+	- in "find_conjunctions" discern whether or not we are looking for
+	  a conjugated verb infront of the conjunction or not.
+	
+	- merge two printing functions
+
+	- fix the sentance printing bugs with borders and printing long verbs (two_word_tense and isdouble true)
+    - create isolate verb function (named handle verb, in verb_matching.php)
+      recognizes and isolates two-word verbs with mid-verb particles
+    - recognize "잘", "못", and "안" "꼭" "다시" between a two-word verb
+	- handle two word verb with 를
+	- 하지만 at start of sentence bug..
+	- specify in "find_tense" and store in mverb whether we're looking for conjugated 
+	  or not verbs preceeding the tense
+	- debug 너는 숙제를 잘 했지만 나는 숙제를 잘 못 했어요. 
+	        나는 숙제를 잘 못 하고 있어요 
+	- Name and Personal Title Search function - TY
+	- Romanization Function - TY
+	- modify add clause to work with handle verb function.
+	- remove "다" after verb is translated
+	- create function for printing verbs whether as an ending verb or not.
+	- ignore 를 ending sections that are associated with the verb (during translation only)
+	- debug 너는 거기로 갔고 나는 여기로 왔습니다. 
+	    는 거 problem...?
+	- if $subject contains a conjunction, the conjunction part is not searched for
+	   in "k2e_noun".		  
+	- Mark conjunction verbs and particles like final verbs and particles.
+	- debug 숙제를 잘못해서 벌을 받았다 
+	- debug 비가 와서 집에 갔다 	 
+	- proper printing and setting for one word (non-double) verbs with inter-verb particles (iv_particle)		  
+	- Add special verbs with 잘 and 못 connected to the verbs 잘못해 in handle verb
+	- debug highlighting for default sentence.
+	- debug 김씨 는 했다
+	- punctuation is object
+	- new sentence data
+		Database updated
+	- Subject keywords
+	- translation actions
+	- definition with function (link to function)
+	- add the final verb to object_sentence
+	- 너는 거기로 갔고 나는 여기로 왔습니다. <- need to add last part of sentence between 나는 and the 
+	  final verb to the object sentence.
+	- make sure we are not matching the tense part of a sentence or something in conjunction search
+	- check how "removed_particle" is set
+	- add conjunctions to object_sentence
+	- remove conjunction search and reordering functions from sentence and add to sentence tools.
+	- k2e noun clause needs to output word definitions (not t_actions) to the object sentence.
+	- k2e noun is not setting the nc_array properly for all events...troubleshoot
+	- ###need to handle removing and replacing mixed words (with english and numbers)
+	-NOTE...dates go to the front of the sentence or conjunction
+	- hoching dectecting needs to happen sooner..(in index.php)
+	- order action from verbs in conjunctions needs to be passed into the mverb object.
+	- nouns need a related question word, "the person WHO runs fast", "the place WHICH is most fun", adjust table
+	- add keywords to noun objects
+	- go verb needs a special action to convert at particles + place to to
+	- add translation actions for verbs
+	- if we find '에' on a word, and that word is a "place" then it becomes "to" at the beginning of the clause.
+	-러 conjunction forces active present tense, must be followed by go/come
+	USING a single noun and then a single verb...
+	- fix object_sentence_array for one word sentences and sentences without verbs..
+	- fix search for one word sentences and sentences without verbs
+	- for mulitpart nouns in k2e noun need to add t-actions and pronouns...change to object?
+	- handle 사람들이 in current sentence..
+	- print english sentence function
+	- ****add translation actions for validated conjunctions****
+		because they don't necessarily move to the same place as the verb does
+	- do translation actions on validated conjunctions
+	- conjunction search goes backwards
+	- uniform way of dealing with hada verbs...and dweida verbs too~!
+	- need to add "iscount" to nouns and need to add ktype to verbs.  Perhaps add all variables
+	  found into the verbs and nouns.
+	- need to add 'verb to conjugate' to the mverb objects
+	- add post positions 
+	- because of "no particle" need to choose the value of the word after 
+	  the movement has been completed, so all values go into the word/term obj. For example, 
+	  "in the gap between China and Japanese"
+	  중국과 일본 틈바구니에서
+	  (update) no particle should be unset when finding the same keyword in the next word. 
+	- any special words in an article, email addresses, phone numbers, punctuation, english
+	  words, are set as the value for 'english'.  
+	- rules for english particles
+	- translate 잘 and 못 insert word at beginning and at end.
+	- in adnominal function in find_verbs.php, need to pass $origin_sentence variable DONE
+	- need to update to eric's new adnominal functions (adnominal_ending_particle_new.php)
+	- print ALL table values in a noun object ->investigate
+	- preposition array for China (to China) is getting lost in the sentence:
+	닉은 중국에서 산 자동차를 한국에 가지고 와서 운전을 하는 법을 배웠다
+	- special handling for 와 과 등? NO
+	- Suspected name translation (bring TY's code in)
+	- adjective table! 공부 **열심히** 하는 학생
+	- Causes infinite loop with "translate_adnominals" on line 352
+		비가 가려던 참이였다	
+	- incorrect action of insert_sentence_pronouns with string:
+		닉은 중국에서 산 자동차를 한국에 가지고 와서 운전을 하는 법이 있다 	
+	- Pronoun assuming and insertion.  
+	- detect topic type (3ps or not)?  
+	- bug: if the sentence ends in a quotation, there is an error!!!!
+
+		
+Does this describe the process?
+
+	1 Basic Organization
+	2 Basic Marking, Advanced Organization
+	3 Pattern Matching, Advanced Marking
+	4 Word Matching, Basic Ordering
+	5 Basic Translation, Advanced Ordering
+	6 Advanced Translation, done.
+
+			~보다 ... 낳다      가장 제일
+Positive	 Comparative   	 Superlative
+bad 			worse 	worst
+badly 			worse 	worst
+far(distance) 	farther 	farthest
+far(extent) 	further 	furthest
+good 			better 	best
+ill 			worse 	worst
+late 			later 	last
+less 			lesser 	least
+little(amount) 	less 	least
+many 			more 	most
+much 			more 	most
+well 			better 	best
+
+	  많이 definitions
+	
+	1 다수 in large [great] numbers; [다량] plentifully; amply; in abundance; in profusion; in large quantities.
+	2 자주 frequently; very often; at short [frequent] intervals.
+	  	
+	- 많이 + action verb?  많이 => "often"...go in front of object as much??
+	- 많이 + descriptive verb?  많이 => "very"
+	- 많이 + count noun? 많이 => "many"
+	- 많이 + non-count noun? 많이 => "much"
+	- It seems like this thing needs to try to go in front of the object
